@@ -22,6 +22,11 @@ var rmvClick = function rmvClick() {
   appData.options = [];
   renderApp();
 };
+var makeDecision = function makeDecision() {
+  var randomNum = Math.floor(Math.random() * appData.options.length);
+  var op = appData.options[randomNum];
+  alert(op);
+};
 var renderApp = function renderApp() {
   var template = React.createElement(
     'div',
@@ -48,23 +53,25 @@ var renderApp = function renderApp() {
       appData.options.length
     ),
     React.createElement(
-      'button',
-      { onClick: rmvClick },
-      'Romeove All'
-    ),
-    React.createElement(
       'ol',
       null,
-      React.createElement(
-        'li',
-        null,
-        'Item one'
-      ),
-      React.createElement(
-        'li',
-        null,
-        'Item two'
-      )
+      appData.options.map(function (option) {
+        return React.createElement(
+          'li',
+          { key: option },
+          option
+        );
+      })
+    ),
+    React.createElement(
+      'button',
+      { disabled: appData.options.length === 0, onClick: makeDecision },
+      'What should I do'
+    ),
+    React.createElement(
+      'button',
+      { onClick: rmvClick },
+      'Romove All'
     ),
     React.createElement(
       'form',

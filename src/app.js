@@ -24,6 +24,12 @@ const rmvClick=()=>{
   appData.options=[]
   renderApp()
 }
+const makeDecision=()=>{
+  const randomNum=Math.floor(Math.random()*appData.options.length)
+  const op=appData.options[randomNum]
+  alert(op)
+
+}
 const renderApp=()=>{
   const template =(
     <div>
@@ -31,11 +37,15 @@ const renderApp=()=>{
         {appData.subtitle &&  <p>{appData.subtitle}</p>}
        <p> {appData.options.length>0 ? "here are options": "No options"}</p>
        <p>{appData.options.length}</p>
-       <button onClick={rmvClick}>Romeove All</button>
+      
          <ol>
-         <li>Item one</li>
-         <li>Item two</li>
+      {  appData.options.map((option)=>{
+          return <li key={option}>{option}</li>
+        })
+      }
          </ol>
+         <button disabled={appData.options.length===0} onClick={makeDecision}>What should I do</button>
+         <button onClick={rmvClick}>Romove All</button>
          <form onSubmit={onFormSubmit}>
             <input type="text" name="options" />
             <button>Add option</button>
