@@ -1,44 +1,64 @@
-const userName='Mike'
 
-const getLocation=(location)=>{
-    if(location)
-    return <p>Location: {location}</p>
-  
+
+
+const appData={
+  title:'Indecision App',
+  subtitle:'Put your life in the hands of computer',
+  options:[]
 }
+const onFormSubmit=(e)=>{
+e.preventDefault()
+console.log("form")
 
-const user={
-     name:"sart",
-     age:25,
-     location:"dehradun"
- }
-let count=0
+const option=e.target.elements.options.value
 
-const addOne=()=>{
-  count++
-  renderCounterApp()
+if(option)
+{
+    appData.options.push(option)
+    e.target.elements.options.value=''
+    renderApp()
+    console.log(appData.options)
 }
-
-const minOne=()=>{
-  count--
-  renderCounterApp()
 }
-
-const reset=()=>{
-  count=0
-  renderCounterApp()
+const rmvClick=()=>{
+appData.options=[]
+renderApp()
 }
-const renderCounterApp=()=>{
-    const templateTwo=(
-        <div>
-        <h1>Count: {count}</h1>           
-        <button onClick={addOne} className="button">+1</button>
-        <button onClick={minOne} className="button">-1</button>
-        <button onClick={reset} className="button">reset</button>
-        </div>
-    )
-   
+const makeDecision=()=>{
+const randomNum=Math.floor(Math.random()*appData.options.length)
+const op=appData.options[randomNum]
+alert(op)
 
 }
+const renderApp=()=>{
+const template =(
+  <div>
+       <h1>{appData.title}</h1>
+      {appData.subtitle &&  <p>{appData.subtitle}</p>}
+     <p> {appData.options.length>0 ? "here are options": "No options"}</p>
+     <p>{appData.options.length}</p>
+    
+       <ol>
+    {  appData.options.map((option)=>{
+        return <li key={option}>{option}</li>
+      })
+    }
+       </ol>
+       <button disabled={appData.options.length===0} onClick={makeDecision}>What should I do</button>
+       <button onClick={rmvClick}>Romove All</button>
+       <form onSubmit={onFormSubmit}>
+          <input type="text" name="options" />
+          <button>Add option</button>
+       </form>
+  </div>
+  )
+  ReactDOM.render(template,appRoot)
+
+}
 
 
-renderCounterApp()
+const appRoot=document.getElementById('app')
+renderApp()
+
+
+
