@@ -2,8 +2,9 @@ import React from 'react'
 
  const Action=(props)=>{              //stateless fuctional componenet
     return (
-      <div>
+      <div >
         <button 
+        className='big-button'
         onClick={props.handlePick}
         disabled={!props.hasOptions}
         >

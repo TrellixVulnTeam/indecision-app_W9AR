@@ -7,7 +7,7 @@
   "scripts": {
     "serve": "live-server public/",
     "build": "webpack --watch",
-    "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets='env,react' --watch"
+    "dev-server": "webpack-dev-server"
   },
   "dependencies": {
     "@babel/core": "^7.17.9",
@@ -16,11 +16,19 @@
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-loader": "^8.2.5",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "css-loader": "^6.7.1",
     "live-server": "^1.1.0",
+    "node-sass": "^7.0.1",
+    "normalize.css": "^8.0.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-modal": "^3.15.1",
+    "sass-loader": "^12.6.0",
+    "style-loader": "^3.3.1",
     "validator": "^13.7.0",
-    "webpack": "^5.72.0"
+    "webpack": "^5.72.0",
+    "webpack-dev-server": "^4.8.1"
   },
   "devDependencies": {
     "webpack-cli": "^4.9.2"

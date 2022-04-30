@@ -1,4 +1,5 @@
 //entry point -> output
+const { dirname } = require('path')
 const path=require('path')
 
 //console.log()
@@ -14,10 +15,24 @@ module.exports={
             loader:'babel-loader',
             test:/\.js$/,
             exclude:/node_modules/
-        }]
+        },
+        {
+            test:/\.s?css$/,
+            use:[
+                'style-loader',
+                'css-loader',
+                'sass-loader'
+            ]
+        }
+    ]
        
     },
-    mode:'development'
+    mode:'development',
+    devtool: 'eval-cheap-module-source-map',
+    devServer:{
+        static: path.join(__dirname,'public')
+    }
+
 
 }
 

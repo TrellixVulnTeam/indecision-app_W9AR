@@ -6,26 +6,22 @@ import Action from './Action'
 import Header from './Header'
 import Options from './Options'
 
+import OptionModal from './OptionModal'
+
 export default class IndecisionApp extends React.Component{
-    constructor(props)
-    {
-      super(props)
-      this.handleDelete=this.handleDelete.bind(this)
-      this.handlePick=this.handlePick.bind(this)
-      this.handleAdd=this.handleAdd.bind(this)
-      this.handleDeleteSinlge=this.handleDeleteSinlge.bind(this)
-      this.state={
-        options:props.options
-      }
-    
-    }
+  state={
+    options:[],
+    selectedOption:undefined
+  }  
+  
+  
     componentDidMount(){
      try{
       const json=localStorage.getItem('options')
       const options=JSON.parse(json)
      if(options)
      {
-      this.setState(()=>({options}))
+      this.setState(()=>({options})) 
   
      }
      }catch(e)
@@ -35,7 +31,7 @@ export default class IndecisionApp extends React.Component{
      
     }
   
-    componentDidUpdate(prevProps,prevState){
+    componentDidUpdate (prevProps,prevState){
       if(prevState.options.length!==this.state.options.length)
       {
       const json=JSON.stringify(this.state.options)
@@ -44,7 +40,7 @@ export default class IndecisionApp extends React.Component{
       }
     }
   
-    handleDelete(){
+    handleDelete=()=>{
       this.setState(()=>{
         return {
           options:[]
@@ -52,19 +48,30 @@ export default class IndecisionApp extends React.Component{
       })
     }
     
-    handleDeleteSinlge(optionToremove){
+    handleClearSelectedOption=()=>{
+      this.setState({
+        selectedOption: undefined
+      })
+    }
+
+    handleDeleteSinlge=(optionToremove)=>{
     this.setState((prevState) => ({
       options: prevState.options.filter((option) => optionToremove !== option)
     }))
   
     }
   
-    handlePick(){
+    handlePick=()=>{
       const randomNum=Math.floor(Math.random()*this.state.options.length)
       const option=this.state.options[randomNum]
-      alert(option)
+     // alert(option)
+
+     this.setState({
+      selectedOption: option
+     })
+
     }
-    handleAdd(option){
+    handleAdd=(option)=>{
       if(!option){
         return 'Enter Valid value to add item'
       }
@@ -84,28 +91,40 @@ export default class IndecisionApp extends React.Component{
     }
     render(){ 
      
-      const subtitle="Computer work"
+      const subtitle="Choose your task"
       
       return(
         <div>
-  
         <Header subtitle={subtitle}/>
+        <div className='container'>
+      
   
         <Action 
         handlePick={this.handlePick}
         hasOptions={this.state.options.length>0}
         />
-  
-        <Options 
+  <div
+  className='widget'>
+  <Options 
         options={this.state.options}
         handleDelete={this.handleDelete}
         handleDeleteSinlge={this.handleDeleteSinlge}
         />
+        <AddOption
+        handleAdd={this.handleAdd}
+        />
+  </div>
+        
   
         
   
-        <AddOption
-        handleAdd={this.handleAdd}
+        
+
+        </div>
+        
+        <OptionModal
+        selectedOption={this.state.selectedOption}
+        handleClearSelectedOption={this.handleClearSelectedOption}
         />
   
         </div>
